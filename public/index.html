@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>oNetwork: speed networking with people in your field</title>
+  <meta name="description" content="Upload your resume, get matched with someone in your field, and talk for three minutes.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="/">oNetwork</a>
+    <span id="stats" class="stats" hidden></span>
+  </header>
+
+  <main id="screen-upload" class="screen narrow">
+    <h1>Three minutes.<br>One person in your field.<br>Next.</h1>
+    <p class="lede">Random video chat for people who'd rather meet a useful stranger than scroll a job board. Drop in your resume and we'll pair you with people who do similar work.</p>
+    <label id="dropzone" class="dropzone" tabindex="0">
+      <input id="file" type="file" accept=".pdf,.docx,.txt,.md" hidden>
+      <strong id="drop-title">Drop your resume here</strong>
+      <span id="drop-sub">PDF, DOCX or TXT, up to 5 MB. Or click to browse.</span>
+    </label>
+    <p id="upload-error" class="error" role="alert" hidden></p>
+    <button id="manual" class="link" type="button">No resume handy? Enter your details by hand</button>
+    <p id="privacy" class="fine"></p>
+    <section id="connections" class="connections" hidden></section>
+  </main>
+
+  <main id="screen-review" class="screen narrow" hidden>
+    <h2>Does this look right?</h2>
+    <p id="review-note" class="lede small"></p>
+    <form id="profile-form" novalidate>
+      <label>Name <small>(others only see your first name)</small><input name="name" maxlength="80" autocomplete="given-name" required></label>
+      <label>Headline<input name="headline" maxlength="140" placeholder="Backend engineer at Acme"></label>
+      <fieldset>
+        <legend>Industries <small>Pick up to 3, main one first. This drives your matches.</small></legend>
+        <div id="industries" class="chips"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Jobs</legend>
+        <div id="jobs" class="rows"></div>
+        <button type="button" class="link" data-add="jobs">+ Add a job</button>
+      </fieldset>
+      <fieldset>
+        <legend>Schools</legend>
+        <div id="schools" class="rows"></div>
+        <button type="button" class="link" data-add="schools">+ Add a school</button>
+      </fieldset>
+      <label>Skills <small>(comma separated)</small><input name="skills" placeholder="TypeScript, Go, Payments"></label>
+      <label>How should people reach you? <small>Shared only if you both choose to connect.</small>
+        <input name="contact" maxlength="200" placeholder="linkedin.com/in/you or you@email.com" autocomplete="off"></label>
+      <label class="check"><input type="checkbox" name="adult"> I'm 18 or older and will keep conversations professional.</label>
+      <p id="review-error" class="error" role="alert" hidden></p>
+      <div class="actions">
+        <button class="primary" type="submit">Start networking</button>
+        <button id="back" class="link" type="button">Start over</button>
+      </div>
+    </form>
+  </main>
+
+  <main id="screen-lobby" class="screen narrow center" hidden>
+    <div class="preview"><video id="preview" autoplay muted playsinline></video><p id="preview-off" class="off" hidden>Camera off. You can still chat by text.</p></div>
+    <h2 id="lobby-title">Finding someone in your field…</h2>
+    <p id="lobby-sub" class="lede small"></p>
+    <p id="lobby-note" class="note" hidden></p>
+    <button id="stop" class="link" type="button">Stop and edit my profile</button>
+  </main>
+
+  <main id="screen-call" class="call" hidden>
+    <section class="stage">
+      <div id="reasons" class="reasons"></div>
+      <div class="timer" id="timer" role="timer">3:00</div>
+      <video id="remote" autoplay playsinline></video>
+      <p id="remote-off" class="off">Connecting video…</p>
+      <video id="local" autoplay muted playsinline></video>
+
+      <div id="wrap" class="wrap" hidden>
+        <h2 id="wrap-title">Time's up</h2>
+        <p id="wrap-sub"></p>
+        <div id="wrap-contact" class="contact-card" hidden></div>
+        <div class="actions">
+          <button id="wrap-connect" class="primary" type="button">Connect</button>
+          <button id="wrap-next" type="button">Next person</button>
+          <button id="wrap-report" class="danger" type="button">Report</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="mic" type="button" aria-pressed="false">Mute</button>
+        <button id="cam" type="button" aria-pressed="false">Camera off</button>
+        <button id="connect" class="primary" type="button">Connect</button>
+        <button id="next" type="button">Next</button>
+        <button id="report" class="danger" type="button">Report</button>
+      </div>
+    </section>
+    <aside class="side">
+      <div id="peer" class="peer"></div>
+      <div id="messages" class="messages" aria-live="polite"></div>
+      <form id="chat" class="chat">
+        <input id="chat-input" maxlength="500" placeholder="Say hi…" autocomplete="off" aria-label="Message">
+        <button type="submit">Send</button>
+      </form>
+    </aside>
+  </main>
+
+  <dialog id="report-dialog">
+    <form method="dialog" id="report-form">
+      <h3>Report this person</h3>
+      <p>This ends the call, and you won't be matched with them again.</p>
+      <label>What happened? <small>(optional)</small><input id="report-reason" maxlength="200"></label>
+      <div class="actions">
+        <button class="danger" value="report">Report and leave</button>
+        <button value="cancel">Cancel</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

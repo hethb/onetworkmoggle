@@ -1,0 +1,14 @@
+Liam Okafor
+liam.okafor@example.com | 212-555-0177
+
+EXPERIENCE
+Backend Developer at Plaid
+Jan 2021 - Present
+• Payments and fintech data APIs written in Python and Go
+• Software design for bank integrations
+
+EDUCATION
+Carnegie Mellon University, M.S. in Information Systems, 2020
+
+SKILLS
+Python, Go, Kubernetes, PostgreSQL

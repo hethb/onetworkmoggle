@@ -1,0 +1,16 @@
+Maya Chen
+maya.chen@example.com | (415) 555-0134 | linkedin.com/in/example-maya
+
+EXPERIENCE
+Senior Software Engineer | Stripe | Jan 2022 - Present
+• Built payments APIs in TypeScript and Go serving millions of merchants
+• Led fintech fraud-detection backend migration
+Software Engineer | Dropbox | Jun 2019 - Dec 2021
+• Developed backend services for a SaaS sync platform
+
+EDUCATION
+Carnegie Mellon University
+B.S. in Computer Science, 2019
+
+SKILLS
+TypeScript, Go, Kubernetes, PostgreSQL, Payments
